@@ -5,27 +5,44 @@ export type Database = {
         Row: Vertical;
         Insert: Omit<Vertical, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<Vertical, 'id'>>;
+        Relationships: [];
       };
       installers: {
         Row: Installer;
         Insert: Omit<Installer, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<Installer, 'id'>>;
+        Relationships: [];
       };
       leads: {
         Row: Lead;
         Insert: Omit<Lead, 'id' | 'created_at' | 'updated_at' | 'status' | 'is_unlocked'>;
         Update: Partial<Omit<Lead, 'id'>>;
+        Relationships: [];
       };
       cities: {
         Row: City;
         Insert: Omit<City, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<City, 'id'>>;
+        Relationships: [];
       };
       content_pages: {
         Row: ContentPage;
         Insert: Omit<ContentPage, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Omit<ContentPage, 'id'>>;
+        Relationships: [];
       };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
     };
   };
 };
