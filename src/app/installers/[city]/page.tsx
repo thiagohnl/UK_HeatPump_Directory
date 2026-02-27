@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createStaticClient } from '@/lib/supabase/server';
 import { InstallerCard } from '@/components/search/InstallerCard';
 import { PostcodeSearch } from '@/components/search/PostcodeSearch';
 import Link from 'next/link';
@@ -31,14 +31,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Pre-generate the top cities at build time
 export async function generateStaticParams() {
-  const supabase = createClient();
-  const { data: cities } = await supabase
-    .from('cities')
-    .select('slug')
-    .order('installer_count', { ascending: false })
-    .limit(50);
+  try {
+    const supabase = createStaticClient();
+    const { data: cities } = await supabase
+      .from('cities')
+      .select('slug')
+      .order('installer_count', { ascending: false })
+      .limit(50);
 
-  return (cities || []).map((city) => ({ city: city.slug }));
+    return (cities || []).map((city) => ({ city: city.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function CityPage({ params }: Props) {
